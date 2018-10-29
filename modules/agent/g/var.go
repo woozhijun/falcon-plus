@@ -91,7 +91,9 @@ func SendToTransfer(metrics []*model.MetricValue) {
 	var resp model.TransferResponse
 	SendMetrics(metrics, &resp)
 	// 数据上报到argus data server
-	reportArgusMetrics(metrics, &resp)
+	if Config().ArgusData.Enabled {
+		reportArgusMetrics(metrics, &resp)
+	}
 
 	if debug {
 		log.Println("<=", &resp)

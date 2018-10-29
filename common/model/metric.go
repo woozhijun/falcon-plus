@@ -77,3 +77,28 @@ func (t *MetaData) String() string {
 func (t *MetaData) PK() string {
 	return MUtils.PK(t.Endpoint, t.Metric, t.Tags)
 }
+
+type ArgusMetric struct {
+	Group 		string 				`json:"group"`
+	Service 	string 				`json:"app"`
+	Metrics 	map[string]float64	`json:"metrics"`
+	Tags 		map[string]string	`json:"tags"`
+	MetricType	string            	`json:"metricType"`
+	MeterType	string            	`json:"meterType"`
+	Step        int64             	`json:"step"`
+	Timestamp   int64             	`json:"timestamp"`
+}
+
+func (this *ArgusMetric) String() string {
+	return fmt.Sprintf(
+		"<Group:%s, Service:%s, Metrics:%s, MetricType:%s, Tags:%s, MeterType:%s, Step:%d, Time:%d>",
+		this.Group,
+		this.Service,
+		this.Metrics,
+		this.Tags,
+		this.MetricType,
+		this.MeterType,
+		this.Step,
+		this.Timestamp,
+	)
+}

@@ -30,6 +30,13 @@ type TransferConfig struct {
 	Timeout  int      `json:"timeout"`
 }
 
+type ArgusDataConfig struct {
+	Enabled  bool     `json:"enabled"`
+	Addrs    []string `json:"addrs"`
+	Interval int      `json:"interval"`
+	Timeout  int      `json:"timeout"`
+}
+
 type HttpConfig struct {
 	Enabled  bool   `json:"enabled"`
 	Listen   string `json:"listen"`
@@ -48,6 +55,7 @@ type GlobalConfig struct {
 	Plugin        *PluginConfig     `json:"plugin"`
 	Heartbeat     *HeartbeatConfig  `json:"heartbeat"`
 	Transfer      *TransferConfig   `json:"transfer"`
+	ArgusData     *ArgusDataConfig  `json:"argus_data"`
 	Http          *HttpConfig       `json:"http"`
 	Collector     *CollectorConfig  `json:"collector"`
 	DefaultTags   map[string]string `json:"default_tags"`

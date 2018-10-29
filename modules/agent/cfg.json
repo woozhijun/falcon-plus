@@ -23,6 +23,14 @@
         "interval": 60,
         "timeout": 1000
     },
+    "argus_data": {
+        "enabled": true,
+        "addrs": [
+            "test-argus-data.monitor.mobike.io:9000"
+        ],
+        "interval": 60,
+        "timeout": 1000
+    },
     "http": {
         "enabled": true,
         "listen": ":1988",
