@@ -30,7 +30,6 @@ _testmain.go
 .DS_Store
 /var
 /falcon-nodata*
-/cfg.json
 /test/build
 
 gitversion

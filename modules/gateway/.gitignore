@@ -30,7 +30,6 @@ _testmain.go
 .DS_Store
 /var
 /falcon-gateway*
-/cfg.json
 /test/build
 git.go
 

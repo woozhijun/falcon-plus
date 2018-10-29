@@ -1,6 +1,5 @@
 *.swp
 *.swo
-/cfg.json
 /agent
 /var
 /falcon-agent*

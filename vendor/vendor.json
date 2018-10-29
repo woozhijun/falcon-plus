@@ -103,10 +103,10 @@
 			"versionExact": "v1.1.4"
 		},
 		{
-			"checksumSHA1": "VCKsz7001qwfA2bHLo/AOn0xos0=",
+			"checksumSHA1": "F4uLXFnFwxcC/U3VK2+JFJcSG+8=",
 			"path": "github.com/go-sql-driver/mysql",
-			"revision": "bf7f34fef176d890dfcc6e94319ac747291bc09a",
-			"revisionTime": "2017-07-03T06:14:36Z"
+			"revision": "7daee5be2a29576f4bada53f3754b8cf886772a6",
+			"revisionTime": "2018-10-20T13:49:31Z"
 		},
 		{
 			"checksumSHA1": "kBeNcaKk56FguvPSUCEaH6AxpRc=",

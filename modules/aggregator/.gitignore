@@ -31,6 +31,5 @@ _testmain.go
 /var
 /falcon-aggregator*
 /aggregator*
-/cfg.json
 /gitversion
 

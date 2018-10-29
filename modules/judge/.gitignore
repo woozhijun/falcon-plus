@@ -31,6 +31,5 @@ _testmain.go
 /var
 /judge*
 /falcon-judge*
-/cfg.json
 /gitversion
 
