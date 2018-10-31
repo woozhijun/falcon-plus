@@ -39,5 +39,4 @@ _testmain.go
 /test/build
 
 tmp
-cfg.json
 gitversion
