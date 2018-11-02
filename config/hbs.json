@@ -1,13 +1,12 @@
 {
     "debug": true,
-    "database": "%%MYSQL%%/falcon_portal?loc=Local&parseTime=true",
+    "database": "mobike001:m0bike123@tcp(mysql.argus.mobike.io:3306)/falcon_portal?loc=Local&parseTime=true",
     "hosts": "",
-    "maxConns": 20,
-    "maxIdle": 15,
+    "maxIdle": 100,
     "listen": ":6030",
     "trustable": [""],
     "http": {
         "enabled": true,
-        "listen": "%%HBS_HTTP%%"
+        "listen": "0.0.0.0:6031"
     }
 }

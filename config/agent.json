@@ -10,14 +10,23 @@
     },
     "heartbeat": {
         "enabled": true,
-        "addr": "%%HBS_RPC%%",
+        "addr": "127.0.0.1:6030",
         "interval": 60,
         "timeout": 1000
     },
     "transfer": {
         "enabled": true,
         "addrs": [
-            "%%TRANSFER_RPC%%"
+            "127.0.0.1:8433",
+            "127.0.0.1:8433"
+        ],
+        "interval": 60,
+        "timeout": 1000
+    },
+    "argus_data": {
+        "enabled": true,
+        "addrs": [
+            "test-argus-data.monitor.mobike.io:9000"
         ],
         "interval": 60,
         "timeout": 1000
