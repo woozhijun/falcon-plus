@@ -29,7 +29,7 @@
             "test-argus-data.monitor.mobike.io:9000"
         ],
         "interval": 60,
-        "timeout": 1000
+        "timeout": 10000
     },
     "http": {
         "enabled": true,

@@ -50,7 +50,6 @@ func (this *SingleConnGrpcClient) ReportData(data []byte) (interface{}, error) {
 		log.Fatalf("%v.Report(_) = _, %v", this.grpcClient, err)
 		return nil,err
 	}
-
 	var metric *ap.Metric
 	if err := json.Unmarshal(data, &metric); err != nil {
 		log.Fatalf("Json unmarshal(%v) = %v", data, err)
@@ -61,11 +60,14 @@ func (this *SingleConnGrpcClient) ReportData(data []byte) (interface{}, error) {
 		log.Fatalf("%v.Send(%v) = %v", stream, data, err)
 		return nil,err
 	}
+
 	reply, err := stream.CloseAndRecv()
 	if err != nil {
 		log.Fatalf("%v.CloseAndRecv() got error %v, want %v", stream, err, nil)
 		return nil,err
 	}
+	defer stream.CloseAndRecv()
+
 	log.Printf("Route summary: %v", reply)
 	return reply, nil
 }

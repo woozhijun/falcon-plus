@@ -34,6 +34,7 @@ func reportArgusMetrics(metrics []*model.MetricValue) {
 }
 
 func reportMetrics(c *SingleConnGrpcClient, metrics []*model.MetricValue) bool {
+
 	for _, data := range createArgusMetric(metrics) {
 		tmp,_ := json.Marshal(data)
 		log.Println("argus Metric parser result: " + string(tmp))
@@ -41,7 +42,7 @@ func reportMetrics(c *SingleConnGrpcClient, metrics []*model.MetricValue) bool {
 		_, err := c.ReportData(tmp)
 		if err != nil {
 			log.Fatalf(">>.report argus Data server failed.<<")
-			return false
+			continue
 		}
 	}
 	return true
