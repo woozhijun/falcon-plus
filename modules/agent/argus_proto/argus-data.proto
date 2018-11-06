@@ -1,0 +1,62 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package com.mobike.apm.argus;
+
+option java_package = "com.mobike.argus";
+option java_multiple_files = true;
+
+service MetricReportingService {
+    rpc report (stream Metric) returns (Empty);
+    rpc reportOnce (Metric) returns (Empty);
+}
+
+message Metric {
+    string group = 1;
+    string app = 2;
+    string type = 3;
+    map<string, double> metrics = 4;
+    map<string, string> tags = 5;
+    int64 timestamp = 6;
+    int32 step = 7;
+    string meterType = 8;
+}
+
+enum MeterType {
+    GUAGE = 0;
+    COUNTER = 1;
+    HISTOGRAM = 2;
+}
+
+enum MetricType {
+    SYS = 0;
+    BUSINESS = 1;
+    KAFKA = 2;
+    ROCKETMQ = 3;
+    CACHE = 4;
+    JVM = 5;
+    NGINX = 6;
+    MYSQL = 7;
+    CODIS = 8;
+    TIDB = 9;
+    HBASE = 10;
+    INFLUX = 11;
+    NETWORK = 12;
+    MICROSERVICE = 13;
+}
+
+message Empty {
+}

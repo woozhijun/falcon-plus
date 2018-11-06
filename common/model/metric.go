@@ -81,12 +81,12 @@ func (t *MetaData) PK() string {
 type ArgusMetric struct {
 	Group 		string 				`json:"group"`
 	Service 	string 				`json:"app"`
+	MetricType	string            	`json:"type"`
 	Metrics 	map[string]float64	`json:"metrics"`
 	Tags 		map[string]string	`json:"tags"`
-	MetricType	string            	`json:"metricType"`
-	MeterType	string            	`json:"meterType"`
-	Step        int64             	`json:"step"`
 	Timestamp   int64             	`json:"timestamp"`
+	Step        int64             	`json:"step"`
+	MeterType	string            	`json:"meterType"`
 }
 
 func (this *ArgusMetric) String() string {

@@ -92,7 +92,7 @@ func SendToTransfer(metrics []*model.MetricValue) {
 	SendMetrics(metrics, &resp)
 	// 数据上报到argus data server
 	if Config().ArgusData.Enabled {
-		reportArgusMetrics(metrics, &resp)
+		reportArgusMetrics(metrics)
 	}
 
 	if debug {

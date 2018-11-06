@@ -3,28 +3,74 @@ package g
 import (
 	"log"
 	"github.com/open-falcon/falcon-plus/common/model"
-
 	"encoding/json"
 	"reflect"
 	"strconv"
 	"errors"
 	"strings"
+	"sync"
+	"math/rand"
+	"time"
 )
 
-func reportArgusMetrics(metrics []*model.MetricValue, resp *model.TransferResponse) {
+var (
+	ArgusClientsLock *sync.RWMutex                    = new(sync.RWMutex)
+	ArgusClients     map[string]*SingleConnGrpcClient = map[string]*SingleConnGrpcClient{}
+)
 
-	result, err := json.Marshal(metrics)
-	if err != nil {
-		log.Println("json paser failed. ", err)
-	}
-	log.Println("result: " + string(result))
+func reportArgusMetrics(metrics []*model.MetricValue) {
+	rand.Seed(time.Now().UnixNano())
+	for _, i := range rand.Perm(len(Config().ArgusData.Addrs)) {
+		addr := Config().ArgusData.Addrs[i]
 
-	for endpointKey, data := range createArgusMetric(metrics) {
-		tmp,_ := json.Marshal(data)
-		log.Println("endpoint: " + endpointKey)
-		log.Println("argus Metric: " + string(tmp))
+		c := getArgusGrpcClient(addr)
+		if c == nil {
+			c = initArgusGrpcClient(addr)
+		}
+		if reportMetrics(c, metrics) {
+			break
+		}
 	}
 }
+
+func reportMetrics(c *SingleConnGrpcClient, metrics []*model.MetricValue) bool {
+	for _, data := range createArgusMetric(metrics) {
+		tmp,_ := json.Marshal(data)
+		log.Println("argus Metric parser result: " + string(tmp))
+
+		_, err := c.ReportData(tmp)
+		if err != nil {
+			log.Fatalf(">>.report argus Data server failed.<<")
+			return false
+		}
+	}
+	return true
+}
+
+func initArgusGrpcClient(addr string) *SingleConnGrpcClient {
+	var c *SingleConnGrpcClient = &SingleConnGrpcClient{
+		ServerAddr: addr,
+		Timeout:    time.Duration(Config().ArgusData.Timeout) * time.Millisecond,
+	}
+	ArgusClientsLock.Lock()
+	defer ArgusClientsLock.Unlock()
+	if c.InitConnGrpcClient() != nil {
+		log.Fatalf("init")
+	}
+	ArgusClients[addr] = c
+	return c
+}
+
+func getArgusGrpcClient(addr string) *SingleConnGrpcClient {
+	ArgusClientsLock.RLock()
+	defer ArgusClientsLock.RUnlock()
+
+	if c, ok := ArgusClients[addr]; ok {
+		return c
+	}
+	return nil
+}
+
 
 func parseFloat64(value interface{}) (float64, error) {
 	tmp := reflect.ValueOf(value)
@@ -76,7 +122,7 @@ func createArgusMetric(metrics []*model.MetricValue) (map[string]*model.ArgusMet
 			argusMetric.Service = "falcon-agent"
 			argusMetric.MetricType = "falcon"
 			argusMetric.Step = metric.Step
-			argusMetric.MeterType = metric.Metric
+			argusMetric.MeterType = metric.Type
 			argusMetric.Timestamp = metric.Timestamp * 1000
 
 			tags := parseTags(metric.Tags)

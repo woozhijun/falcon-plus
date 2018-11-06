@@ -37,6 +37,7 @@ _testmain.go
 /falcon-graph*
 /test/*.go
 /test/build
+/data
 
 tmp
 gitversion
