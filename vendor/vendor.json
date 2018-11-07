@@ -537,8 +537,8 @@
 		{
 			"checksumSHA1": "GtamqiJoL7PGHsN454AoffBFMa8=",
 			"path": "golang.org/x/net/context",
-			"revision": "c10e9556a7bc0e7c942242b606f0acf024ad5d6a",
-			"revisionTime": "2018-11-02T08:55:01Z"
+			"revision": "10aee181995363b41f712a55844a0dd52ea04646",
+			"revisionTime": "2018-11-06T03:02:00Z"
 		},
 		{
 			"checksumSHA1": "pCY4YtdNKVBYRbNvODjx8hj0hIs=",
@@ -583,7 +583,7 @@
 			"revisionTime": "2018-11-06T03:02:00Z"
 		},
 		{
-			"checksumSHA1": "IawG7xjKYf2JnFsj+3unrFidmJU=",
+			"checksumSHA1": "9Lh37XjQyI4RcRhPq8X4SxXy1vQ=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "9ccfe848b9db8435a24c424abbc07a921adf1df5",
 			"revisionTime": "2017-04-27T03:54:25Z"
