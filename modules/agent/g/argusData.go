@@ -39,10 +39,10 @@ func reportMetrics(c *SingleConnGrpcClient, metrics []*model.MetricValue) bool {
 		tmp,_ := json.Marshal(data)
 		log.Println("argus Metric parser result: " + string(tmp))
 
-		_, err := c.ReportData(tmp)
+		err := c.ReportData(tmp)
 		if err != nil {
 			log.Fatalf(">>.report argus Data server failed.<<")
-			continue
+			return false
 		}
 	}
 	return true
@@ -55,8 +55,8 @@ func initArgusGrpcClient(addr string) *SingleConnGrpcClient {
 	}
 	ArgusClientsLock.Lock()
 	defer ArgusClientsLock.Unlock()
-	if c.InitConnGrpcClient() != nil {
-		log.Fatalf("init")
+	if c.InitGrpcClient() != nil {
+		log.Fatalf("init failed.")
 	}
 	ArgusClients[addr] = c
 	return c
