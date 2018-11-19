@@ -41,7 +41,7 @@ func reportMetrics(c *SingleConnGrpcClient, metrics []*model.MetricValue) bool {
 
 		err := c.ReportData(tmp)
 		if err != nil {
-			log.Fatalf(">>.report argus Data server failed.<<")
+			log.Fatalf(">>.report argus Data server failed.<<  %v", err)
 			return false
 		}
 	}
@@ -72,7 +72,6 @@ func getArgusGrpcClient(addr string) *SingleConnGrpcClient {
 	return nil
 }
 
-
 func parseFloat64(value interface{}) (float64, error) {
 	tmp := reflect.ValueOf(value)
 	switch value.(type) {
@@ -85,7 +84,11 @@ func parseFloat64(value interface{}) (float64, error) {
 	case float64, float32:
 		return tmp.Float(), nil
 	default:
-		return float64(0), errors.New("not match value for type -> " + tmp.Type().String())
+		if tmp.Type() != nil {
+			return float64(0), errors.New("not match value for type -> " + tmp.Type().String())
+		} else {
+			return float64(0), errors.New("not match value for type -> nil")
+		}
 	}
 }
 
@@ -112,7 +115,7 @@ func createArgusMetric(metrics []*model.MetricValue) (map[string]*model.ArgusMet
 
 		data, err := parseFloat64(metric.Value)
 		if err != nil {
-			log.Println("metricValue parseFloat error." + err.Error())
+			log.Printf("metricValue parseFloat error: %v, Metric: %v", err.Error(), metric)
 			continue
 		}
 		endpointKey := metric.Endpoint + "&"+ metric.Tags
