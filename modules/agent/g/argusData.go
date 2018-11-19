@@ -74,6 +74,9 @@ func getArgusGrpcClient(addr string) *SingleConnGrpcClient {
 
 func parseFloat64(value interface{}) (float64, error) {
 	tmp := reflect.ValueOf(value)
+	if value == nil {
+		return float64(0), errors.New("Metric value is nil ->  ")
+	}
 	switch value.(type) {
 	case string:
 		return strconv.ParseFloat(tmp.String(), 64)
@@ -84,11 +87,7 @@ func parseFloat64(value interface{}) (float64, error) {
 	case float64, float32:
 		return tmp.Float(), nil
 	default:
-		if tmp.Type() != nil {
-			return float64(0), errors.New("not match value for type -> " + tmp.Type().String())
-		} else {
-			return float64(0), errors.New("not match value for type -> nil")
-		}
+		return float64(0), errors.New("not match value for type -> " + tmp.Type().String())
 	}
 }
 
